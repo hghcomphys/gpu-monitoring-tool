@@ -1,4 +1,3 @@
-from sys import exception
 import pynvml
 import plotext as plt
 import time
@@ -58,7 +57,7 @@ try:
         plt.clt()
         plt.cld()
         plt.theme("matrix")
-        plt.plotsize(120, 20)
+        plt.plotsize(100, 20)
 
         # --------------
         plt.subplot(1, 2)
