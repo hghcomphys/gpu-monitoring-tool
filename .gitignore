@@ -1,3 +1,5 @@
+__pycache__
 .pixi
 *.egg-info
+experiments
 a.out

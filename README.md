@@ -24,5 +24,5 @@ To uninstall `gtop` use this command
 $ pip uninstall gtop
 ```
 
-## Screenshots
-<img src="screenshot.png" alt="demo" width="700"/>
+## Screenshot
+<img src="docs/images/screenshot.png" alt="demo" width="700"/>
