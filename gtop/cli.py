@@ -8,10 +8,10 @@ def main():
 
     try:
         pynvml.nvmlInit()
-    except pynvml.NVMLError_LibraryNotFound:
-        print("Nvidia GPU not detected on this machine!")
+        handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+    except pynvml.NVMLError:
+        print("Nvidia GPU not detected!")
         sys.exit(1)
-    handle = pynvml.nvmlDeviceGetHandleByIndex(0)
 
     # Time and data storage
     times = []
