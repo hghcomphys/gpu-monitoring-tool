@@ -1,12 +1,16 @@
 import pynvml
 import plotext as plt
 import time
+import sys
 
 
 def main():
 
-    # Initialize NVML
-    pynvml.nvmlInit()
+    try:
+        pynvml.nvmlInit()
+    except pynvml.NVMLError_LibraryNotFound:
+        print("Nvidia GPU not detected on this machine!")
+        sys.exit(1)
     handle = pynvml.nvmlDeviceGetHandleByIndex(0)
 
     # Time and data storage
