@@ -2,14 +2,16 @@ import time
 import pynvml
 from gtop.device import DeviceHandle
 from gtop.metrics import Metrics
+from gtop.config import Config
 
 
 def collect(
-    handle: DeviceHandle,
     metrics: Metrics,
+    handle: DeviceHandle,
     start_time: float,
-    max_points: int,
+    cfg: Config, 
 ):
+    max_points = cfg.collector_max_points
     now = time.time() - start_time
     tx = pynvml.nvmlDeviceGetPcieThroughput(handle, pynvml.NVML_PCIE_UTIL_TX_BYTES) / (
         1024
@@ -22,7 +24,7 @@ def collect(
     mem_used = int(mem_info.used / 1024**2)  # MB
     mem_total = int(mem_info.total / 1024**2)  # MB
     # -----
-    metrics.times.append(round(now, 1))
+    metrics.times.append(max(now, cfg.collector_min_interval))
     metrics.tx_values.append(tx)
     metrics.rx_values.append(rx)
     metrics.util_values.append(util.gpu)
