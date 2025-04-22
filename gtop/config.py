@@ -13,6 +13,7 @@ class Config:
     visualizer_plot_theme: Optional[str] = "matrix"
     visualizer_plot_marker: str = "dot"
     update_interval: float = 1.0
+    text_mode: bool = False
 
     @classmethod
     def from_parser(

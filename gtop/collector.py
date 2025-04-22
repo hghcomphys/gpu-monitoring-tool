@@ -29,6 +29,10 @@ class CollectedMetricsBuffer:
         for item in self.buffer:
             yield item
 
+    @property
+    def last(self) -> CollectedMetrics:
+        return self.buffer[-1]
+
 
 def collect(
     metrics: Metrics,
@@ -45,5 +49,5 @@ def collect(
         pci_tx=tx,
         pci_rx=rx,
         process=process,
-        memory=mem_used / mem_total,
+        memory=mem_used / mem_total * 100,
     )

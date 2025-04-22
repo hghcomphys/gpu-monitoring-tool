@@ -41,3 +41,13 @@ pip uninstall gtop
 A screenshot of `gtop` in action is shown below:
 
 <img src="docs/images/screenshot.png" alt="demo screemshot" width="700"/>
+
+### Text-mode
+```bash
+ghorbanh@sasdsnode01:~$ gtop -t
+CollectedMetrics(timestamp=0.1, pci_tx=0.0009765625, pci_rx=0.0, process=0, memory=3.2519531249999996)
+CollectedMetrics(timestamp=1.0479564666748047, pci_tx=0.0, pci_rx=0.0, process=0, memory=3.2519531249999996)
+...
+CollectedMetrics(timestamp=18.835940837860107, pci_tx=0.0, pci_rx=0.0, process=100, memory=4.287109375)
+CollectedMetrics(timestamp=19.88008189201355, pci_tx=0.0, pci_rx=0.0009765625, process=100, memory=4.287109375)
+```

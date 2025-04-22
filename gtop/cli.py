@@ -12,13 +12,6 @@ from gtop.collector import CollectedMetricsBuffer
 def parse_arguments():
     parser = argparse.ArgumentParser(description="A basic CLI tool to Monitor GPU.")
     parser.add_argument(
-        "--update-interval",
-        "-i",
-        type=float,
-        default=1.0,
-        help="Time interval between updates in seconds (default: 1.0)",
-    )
-    parser.add_argument(
         "--device-gpu-index",
         "-g",
         type=int,
@@ -26,11 +19,17 @@ def parse_arguments():
         help="GPU index to monitor (default: 0)",
     )
     parser.add_argument(
-        "--collector-max-points",
-        "-p",
-        type=int,
-        default=30,
-        help="Maximum number of data points shown in graphs (default: 30)",
+        "--update-interval",
+        "-u",
+        type=float,
+        default=1.0,
+        help="Time interval between updates in seconds (default: 1.0)",
+    )
+    parser.add_argument(
+        "--text-mode",
+        "-t",
+        action='store_true',
+        help="Enable text mode (default: False)",
     )
     return parser.parse_args()
 

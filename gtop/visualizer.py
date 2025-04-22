@@ -1,15 +1,23 @@
 from gtop.config import Config
-from gtop.collector import CollectedMetrics
-from typing import Any, List
+from gtop.collector import CollectedMetricsBuffer
+from typing import Any, Sequence
 
 PlotHandle = Any
 
 
+def printout_metrics(inputs: CollectedMetricsBuffer) -> None:
+    print(inputs.last)
+
+
 def visualize(
-    inputs: List[CollectedMetrics],
+    inputs: CollectedMetricsBuffer,
     plt: PlotHandle,
     cfg: Config,
 ) -> None:
+    if cfg.text_mode:
+        printout_metrics(inputs)
+        return
+
     plt.clt()
     plt.cld()
     plt.subplots(1, 2)

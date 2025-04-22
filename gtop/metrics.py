@@ -9,7 +9,7 @@ from typing import Any
 
 class MetricInterface(Protocol):
     def measure() -> float:
-        pass
+        ...
 
 
 @dataclass
