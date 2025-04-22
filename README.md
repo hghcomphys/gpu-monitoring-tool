@@ -1,28 +1,43 @@
 # GPU Monitoring Tool
-A basic CLI tool to monitor code performance on GPU. 
+=====================
 
-## Why?
-It would be quite useful when optimizing code running on the GPU.
-Most current GPU monitoring tools don't show PCI throughput/bandwidth info. 
-These metrics are important to be measured as most of the time data transfer between CPU and GPU is the computational bottleneck.  
+A lightweight CLI tool to monitor GPU performance.
 
-## Intended Features:
-- lightweight and minimal (dependencies) design
-- GPU utilization, memory usage, PCI throughput
-- work on Nvidia GPU (for now)
-- support for multiple GPUs
+## Motivation
+-------------
+
+Current GPU monitoring tools often fall short in two key areas:
+
+* **Lack of PCI throughput metrics**: RX and TX metrics are crucial, as data transfer between CPU and GPU is frequently the computational bottleneck.
+* **Inflexible metric selection**: Users should be able to customize which metrics they need to measure, rather than being limited to predefined sets.
+
+## Intended Features
+-------------------
+The following features are planned for this tool:
+
+* **Lightweight and minimal dependencies**: Easy to install and run with minimal system impact.
+* **Basic metrics**: GPU utilization, Memory usage, PCI throughput, and Processes. 
+* **Nvidia GPU support**: Initially targeting Nvidia GPUs, with potential expansion to AMD in the future.
+* **Multi-GPU support**: Ability to monitor multiple GPUs. 
+* **Customization**: support for user-level configurable file 
 
 ## Installation
-```bash
-$ pip install --user .
-```
-This will install required dependencies and adding `gtop` to user specific executable `~/.local/bin`.
-Then, simply run `gtop`.
+------------
 
-To uninstall `gtop` use this command
+To install `gtop`, run the following command:
 ```bash
-$ pip uninstall gtop
+pip install --user .
+```
+This will install required dependencies and add `gtop` to your user-specific executable path (`~/.local/bin`). 
+You can then run `gtop` directly.
+
+To uninstall `gtop`, use the following command:
+```bash
+pip uninstall gtop
 ```
 
-## Screenshot
-<img src="docs/images/screenshot.png" alt="demo" width="700"/>
+## Example Usage
+---------------
+A screenshot of `gtop` in action is shown below:
+
+<img src="docs/images/screenshot.png" alt="demo screemshot" width="700"/>

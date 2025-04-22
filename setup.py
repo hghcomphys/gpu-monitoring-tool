@@ -13,5 +13,6 @@ setup(
         'nvidia-ml-py>=11.450.129',
         'plotext>=5.2.8',
     ],
+    # python_requires='>=3.8',
 )
 

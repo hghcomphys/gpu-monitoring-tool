@@ -1,38 +1,49 @@
 import time
-import pynvml
+from dataclasses import dataclass, field
+from typing import List
+from gtop.config import Config
 from gtop.device import DeviceHandle
 from gtop.metrics import Metrics
-from gtop.config import Config
+
+
+@dataclass
+class CollectedMetrics:
+    timestamp: float
+    pci_tx: float
+    pci_rx: float
+    process: float
+    memory: float
+
+
+@dataclass
+class CollectedMetricsBuffer:
+    size: int
+    buffer: List[CollectedMetrics] = field(default_factory=list)
+
+    def append(self, item: CollectedMetrics) -> None:
+        self.buffer.append(item)
+        if len(self.buffer) > self.size:
+            self.buffer = self.buffer[-self.size :]
+
+    def __iter__(self):
+        for item in self.buffer:
+            yield item
 
 
 def collect(
     metrics: Metrics,
     handle: DeviceHandle,
     start_time: float,
-    cfg: Config, 
-):
-    max_points = cfg.collector_max_points
+    cfg: Config,
+) -> CollectedMetrics:
     now = time.time() - start_time
-    tx = pynvml.nvmlDeviceGetPcieThroughput(handle, pynvml.NVML_PCIE_UTIL_TX_BYTES) / (
-        1024
-    )  # MB
-    rx = pynvml.nvmlDeviceGetPcieThroughput(handle, pynvml.NVML_PCIE_UTIL_RX_BYTES) / (
-        1024
-    )  # MB
-    util = pynvml.nvmlDeviceGetUtilizationRates(handle)
-    mem_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
-    mem_used = int(mem_info.used / 1024**2)  # MB
-    mem_total = int(mem_info.total / 1024**2)  # MB
-    # -----
-    metrics.times.append(max(now, cfg.collector_min_interval))
-    metrics.tx_values.append(tx)
-    metrics.rx_values.append(rx)
-    metrics.util_values.append(util.gpu)
-    metrics.mem_values.append(mem_used / mem_total * 100.0)
-    if len(metrics.times) > max_points:
-        metrics.times = metrics.times[-max_points:]
-        metrics.tx_values = metrics.tx_values[-max_points:]
-        metrics.rx_values = metrics.rx_values[-max_points:]
-        metrics.util_values = metrics.util_values[-max_points:]
-        metrics.mem_values = metrics.mem_values[-max_points:]
-
+    tx, rx = metrics.pci_throughput.measure()
+    process = metrics.gpu_processs.measure()
+    mem_used, mem_total = metrics.gpu_memory.measure()
+    return CollectedMetrics(
+        timestamp=max(now, cfg.collector_min_interval),
+        pci_tx=tx,
+        pci_rx=rx,
+        process=process,
+        memory=mem_used / mem_total,
+    )

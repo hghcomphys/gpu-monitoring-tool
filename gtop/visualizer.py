@@ -1,12 +1,12 @@
 from gtop.config import Config
-from gtop.metrics import Metrics
-from typing import Any
+from gtop.collector import CollectedMetrics
+from typing import Any, List
 
 PlotHandle = Any
 
 
 def visualize(
-    metrics: Metrics,
+    inputs: List[CollectedMetrics],
     plt: PlotHandle,
     cfg: Config,
 ) -> None:
@@ -17,42 +17,45 @@ def visualize(
     plt.plotsize(cfg.visualizer_plot_size)
     # --------------
     plt.subplot(1, 2)
+    timestamps = [input.timestamp for input in inputs]
+    pci_tx_values = [input.pci_tx for input in inputs]
+    pci_rx_values = [input.pci_rx for input in inputs]
     plt.plot(
-        metrics.times,
-        metrics.tx_values,
+        timestamps,
+        pci_tx_values,
         label="TX",
         marker=cfg.visualizer_plot_marker,
     )
     plt.plot(
-        metrics.times,
-        metrics.rx_values,
+        timestamps,
+        pci_rx_values,
         label="RX",
         marker=cfg.visualizer_plot_marker,
     )
-
     plt.title("GPU PCIe Throughput")
     plt.xlabel("Time (s)")
     plt.ylabel("Throughput (MB/s)")
-    plt.ylim(0, max(1, max(metrics.tx_values + metrics.rx_values) * 1.2))
+    plt.ylim(0, max(1, max(pci_tx_values + pci_rx_values) * 1.2))
 
     # --------------
     plt.subplot(1, 1)
+    process_values = [input.process for input in inputs]
+    memory_values = [input.memory for input in inputs]
     plt.plot(
-        metrics.times,
-        metrics.util_values,
+        timestamps,
+        process_values,
         label="Process",
         marker=cfg.visualizer_plot_marker,
     )
     plt.plot(
-        metrics.times,
-        metrics.mem_values,
+        timestamps,
+        memory_values,
         label="Memory",
         marker=cfg.visualizer_plot_marker,
     )
-
     plt.title("GPU Utilization")
     plt.xlabel("Time (s)")
     plt.ylabel("Utilization (%)")
     plt.ylim(0, 100)
-    plt.sleep(cfg.update_interval)
+
     plt.show()
