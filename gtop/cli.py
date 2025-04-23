@@ -35,11 +35,10 @@ def parse_arguments():
 
 
 def main():
-
     cfg = Config.from_parser(args=parse_arguments())
     handle = get_device(cfg)
     metrics = Metrics.for_device(handle)
-    buffer = CollectedMetricsBuffer(size=cfg.collector_max_points)
+    buffer = CollectedMetricsBuffer(size=cfg.collector_buffer_size)
     start_time = time.time()
     try:
         while True:

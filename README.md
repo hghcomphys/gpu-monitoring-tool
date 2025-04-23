@@ -45,9 +45,10 @@ A screenshot of `gtop` in action is shown below:
 ### Text-mode
 ```bash
 ghorbanh@sasdsnode01:~$ gtop -t
-CollectedMetrics(timestamp=0.1, pci_tx=0.0009765625, pci_rx=0.0, process=0, memory=3.2519531249999996)
-CollectedMetrics(timestamp=1.0479564666748047, pci_tx=0.0, pci_rx=0.0, process=0, memory=3.2519531249999996)
+$ gtop -t
+CollectedMetrics(Time=0.10(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.00(%), Memory=2.31(%))
+CollectedMetrics(Time=1.13(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.00(%), Memory=2.31(%))
 ...
-CollectedMetrics(timestamp=18.835940837860107, pci_tx=0.0, pci_rx=0.0, process=100, memory=4.287109375)
-CollectedMetrics(timestamp=19.88008189201355, pci_tx=0.0, pci_rx=0.0009765625, process=100, memory=4.287109375)
+CollectedMetrics(Time=10.14(s), PCI-TX=0.01(MB/s),  PCI-RX=42.37(MB/s), Process=100.00(%), Memory=3.74(%))
+CollectedMetrics(Time=11.18(s), PCI-TX=11.02(MB/s), PCI-RX=0.03(MB/s),  Process=100.00(%), Memory=3.74(%))
 ```

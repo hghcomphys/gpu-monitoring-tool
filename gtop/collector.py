@@ -14,6 +14,17 @@ class CollectedMetrics:
     process: float
     memory: float
 
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}("
+            f"Time={self.timestamp:0.2f}(s)"
+            f", PCI-TX={self.pci_tx:0.2f}(MB/s)"
+            f", PCI-RX={self.pci_rx:0.2f}(MB/s)"
+            f", Process={self.process:0.2f}(%)"
+            f", Memory={self.memory:0.2f}(%)"
+            ")"
+        )
+
 
 @dataclass
 class CollectedMetricsBuffer:
@@ -33,6 +44,10 @@ class CollectedMetricsBuffer:
     def last(self) -> CollectedMetrics:
         return self.buffer[-1]
 
+    @property
+    def first(self) -> CollectedMetrics:
+        return self.buffer[0]
+
 
 def collect(
     metrics: Metrics,
@@ -45,7 +60,7 @@ def collect(
     process = metrics.gpu_processs.measure()
     mem_used, mem_total = metrics.gpu_memory.measure()
     return CollectedMetrics(
-        timestamp=max(now, cfg.collector_min_interval),
+        timestamp=max(now, cfg.collector_min_time_interval),
         pci_tx=tx,
         pci_rx=rx,
         process=process,

@@ -1,12 +1,8 @@
 from gtop.config import Config
 from gtop.collector import CollectedMetricsBuffer
-from typing import Any, Sequence
+from typing import Any
 
 PlotHandle = Any
-
-
-def printout_metrics(inputs: CollectedMetricsBuffer) -> None:
-    print(inputs.last)
 
 
 def visualize(
@@ -17,7 +13,6 @@ def visualize(
     if cfg.text_mode:
         printout_metrics(inputs)
         return
-
     plt.clt()
     plt.cld()
     plt.subplots(1, 2)
@@ -67,3 +62,7 @@ def visualize(
     plt.ylim(0, 100)
 
     plt.show()
+
+
+def printout_metrics(inputs: CollectedMetricsBuffer) -> None:
+    print(inputs.last)
