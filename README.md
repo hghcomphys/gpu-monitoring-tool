@@ -1,29 +1,22 @@
 # GPU Monitoring Tool
-=====================
-
 A lightweight CLI tool to monitor GPU performance.
 
 ## Motivation
--------------
-
 Current GPU monitoring tools often fall short in two key areas:
 
-* **Lack of PCI throughput metrics**: RX and TX metrics are crucial, as data transfer between CPU and GPU is frequently the computational bottleneck.
-* **Inflexible metric selection**: Users should be able to customize which metrics they need to measure, rather than being limited to predefined sets.
+* Lack of PCI throughput metrics: RX and TX metrics are important, as data transfer between CPU and GPU is frequently the computational bottleneck.
+* Inflexible metric selection: Users should be able to customize which metrics they need to measure, rather than being limited to predefined sets.
 
-## Intended Features
--------------------
+## Features (intended)
 The following features are planned for this tool:
 
-* **Lightweight and minimal dependencies**: Easy to install and run with minimal system impact.
-* **Basic metrics**: GPU utilization, Memory usage, PCI throughput, and Processes. 
-* **Nvidia GPU support**: Initially targeting Nvidia GPUs, with potential expansion to AMD in the future.
-* **Multi-GPU support**: Ability to monitor multiple GPUs. 
-* **Customization**: support for user-level configurable file 
+* Lightweight and minimal
+* Basic metrics like GPU utilization, memory usage, PCI throughput, and processes. 
+* Support monitoring multiple GPUs. 
+* Targeting Nvidia GPUs, with potential extension to AMD GPUs.
+* User-level customizations 
 
 ## Installation
-------------
-
 To install `gtop`, run the following command:
 ```bash
 pip install --user .
@@ -36,13 +29,13 @@ To uninstall `gtop`, use the following command:
 pip uninstall gtop
 ```
 
-## Example Usage
----------------
+## Examples
 A screenshot of `gtop` in action is shown below:
 
 <img src="docs/images/screenshot.png" alt="demo screemshot" width="700"/>
 
 ### Text-mode
+Text mode can be enabled via `--text-mode` or `-t` flag:
 ```bash
 ghorbanh@sasdsnode01:~$ gtop -t
 $ gtop -t
