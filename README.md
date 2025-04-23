@@ -1,5 +1,6 @@
 # GPU Monitoring Tool
-A lightweight CLI tool to monitor GPU performance.
+
+A lightweight CLI tool to monitor GPU.
 
 ## Motivation
 Current GPU monitoring tools often fall short in two key areas:
@@ -11,10 +12,10 @@ Current GPU monitoring tools often fall short in two key areas:
 The following features are planned for this tool:
 
 * Lightweight and minimal
-* Basic metrics like GPU utilization, memory usage, PCI throughput, and processes. 
-* Support monitoring multiple GPUs. 
-* Targeting Nvidia GPUs, with potential extension to AMD GPUs.
-* User-level customizations 
+* Basic metrics like GPU utilization, memory usage, PCI throughput, and processes
+* Support monitoring multiple GPUs 
+* Targeting Nvidia GPUs, with potential extension to AMD GPUs
+* Allowing user-level customization 
 
 ## Installation
 To install `gtop`, run the following command:
@@ -37,7 +38,6 @@ A screenshot of `gtop` in action is shown below:
 ### Text-mode
 Text mode can be enabled via `--text-mode` or `-t` flag:
 ```bash
-ghorbanh@sasdsnode01:~$ gtop -t
 $ gtop -t
 CollectedMetrics(Time=0.10(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.00(%), Memory=2.31(%))
 CollectedMetrics(Time=1.13(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.00(%), Memory=2.31(%))
