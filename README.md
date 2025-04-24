@@ -23,7 +23,7 @@ The following features are planned for this tool:
 ## Installation
 To install `gtop`, run the following command:
 ```bash
-pip install --user .
+pip install --user gtop
 ```
 This will install required dependencies and add `gtop` to your user-specific executable path (`~/.local/bin`). 
 You can then run `gtop` directly.
