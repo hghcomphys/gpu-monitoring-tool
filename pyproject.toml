@@ -2,8 +2,8 @@
 requires      = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-py-modules = ["gtop"]
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [project]
 name = "gtop"
@@ -21,11 +21,10 @@ dependencies = [
 requires-python = ">=3.8"
 
 [project.optional-dependencies]
-dev = ["black", "isort", "pytest"]
+dev = ["pytest", "mypy", "black", "isort"]
 
 [project.urls]
 Homepage = "https://github.com/hghcomphys/gpu-monitoring-tool" 
-Repository = "https://github.com/hghcomphys/gpu-monitoring-tool" 
 
 [project.scripts]
 gtop = "gtop.cli:main"
