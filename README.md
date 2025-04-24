@@ -3,19 +3,22 @@
 A lightweight CLI tool to monitor GPU.
 
 ## Motivation
-Current GPU monitoring tools often fall short in two key areas:
+Current GPU monitoring tools often fall short in two ways:
 
-* Lack of PCI throughput metrics: RX and TX metrics are important, as data transfer between CPU and GPU is frequently the computational bottleneck.
+* No PCI throughput metrics: RX and TX metrics are important, as data transfer between CPU and GPU is frequently the computational bottleneck.
 * Inflexible metric selection: Users should be able to customize which metrics they need to measure, rather than being limited to predefined sets.
 
-## Features (intended)
+<!--
+## Features
 The following features are planned for this tool:
 
+[x] Basic metrics like GPU utilization, memory usage, PCI throughput
+[x] Targeting Nvidia GPUs, with potential extension to AMD GPUs
+* A table of GPU processes
+* User-level customization 
 * Lightweight and minimal
-* Basic metrics like GPU utilization, memory usage, PCI throughput, and processes
-* Support monitoring multiple GPUs 
-* Targeting Nvidia GPUs, with potential extension to AMD GPUs
-* Allowing user-level customization 
+* Multiple GPU support 
+-->
 
 ## Installation
 To install `gtop`, run the following command:
@@ -45,3 +48,6 @@ CollectedMetrics(Time=1.13(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.0
 CollectedMetrics(Time=10.14(s), PCI-TX=0.01(MB/s),  PCI-RX=42.37(MB/s), Process=100.00(%), Memory=3.74(%))
 CollectedMetrics(Time=11.18(s), PCI-TX=11.02(MB/s), PCI-RX=0.03(MB/s),  Process=100.00(%), Memory=3.74(%))
 ```
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
