@@ -11,7 +11,8 @@ version = "0.1.0"
 description = "A lightweight CLI tool to monitor GPU"
 readme = "README.md"
 authors = [{ name = "Hossein Ghorbanfekr", email = "hgh.comphys@gmail.com" }]
-license = { file = "LICENSE" }
+license = "MIT"
+license-files= ["LICENSE"]
 keywords = ["GPU"]
 dependencies = [
 	'nvidia-ml-py>=11.450.129',
