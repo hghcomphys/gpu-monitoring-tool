@@ -8,7 +8,7 @@ py-modules = ["gtop"]
 [project]
 name = "gtop"
 version = "0.1.0"
-description = "A lightweight CLI tool to monitor GPU"
+description = "A lightweight CLI tool to monitor GPU."
 readme = "README.md"
 authors = [{ name = "Hossein Ghorbanfekr", email = "hgh.comphys@gmail.com" }]
 license = "MIT"

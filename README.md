@@ -1,6 +1,6 @@
-#GPU Monitoring Tool
+# GPU Monitoring Tool
 
-![PyPI](https://img.shields.io/pypi/v/gtop?label=pypi%20package)
+[![PyPI](https://img.shields.io/pypi/v/gtop?label=pypi%20package)](https://pypi.org/project/gtop)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A lightweight CLI tool to monitor GPU.
