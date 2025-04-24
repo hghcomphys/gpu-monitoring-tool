@@ -1,7 +1,7 @@
 # GPU Monitoring Tool
 
-[![PyPI](https://img.shields.io/pypi/v/gtop?label=pypi%20package)](https://pypi.org/project/gtop)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!-- [![PyPI](https://img.shields.io/pypi/v/gtop?label=pypi%20package)](https://pypi.org/project/gtop) -->
+<!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) -->
 
 A lightweight CLI tool to monitor GPU.
 
@@ -26,7 +26,7 @@ The following features are planned for this tool:
 ## Installation
 To install `gtop`, run the following command:
 ```bash
-pip install --user gtop
+pip install --user git+https://github.com/hghcomphys/gpu-monitoring-tool.git
 ```
 This will install required dependencies and add `gtop` to your user-specific executable path (`~/.local/bin`). 
 You can then run `gtop` directly.
