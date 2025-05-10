@@ -45,11 +45,11 @@ A screenshot of `gtop` in action is shown below:
 Text mode can be enabled via `--text-mode` or `-t` flag:
 ```bash
 $ gtop -t
-CollectedMetrics(Time=0.10(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.00(%), Memory=2.31(%))
-CollectedMetrics(Time=1.13(s), PCI-TX=0.00(MB/s), PCI-RX=0.00(MB/s), Process=0.00(%), Memory=2.31(%))
+CollectedMetrics(Time=0.10(s), Process=0.00(%), Memory=2.31(%), PCI-RX=0.00(MB/s), PCI-TX=0.00(MB/s))
+CollectedMetrics(Time=1.13(s), Process=0.00(%), Memory=2.31(%), PCI-RX=0.00(MB/s), PCI-TX=0.00(MB/s))
 ...
-CollectedMetrics(Time=10.14(s), PCI-TX=0.01(MB/s),  PCI-RX=42.37(MB/s), Process=100.00(%), Memory=3.74(%))
-CollectedMetrics(Time=11.18(s), PCI-TX=11.02(MB/s), PCI-RX=0.03(MB/s),  Process=100.00(%), Memory=3.74(%))
+CollectedMetrics(Time=10.14(s), Process=100.00(%), Memory=3.74(%),  PCI-RX=42.37(MB/s), PCI-TX=0.01(MB/s))
+CollectedMetrics(Time=11.18(s),  Process=100.00(%), Memory=3.74(%), PCI-RX=0.03(MB/s), PCI-TX=11.02(MB/s))
 ```
 
 ## License

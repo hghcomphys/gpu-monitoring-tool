@@ -7,8 +7,8 @@ where = ["src"]
 
 [project]
 name = "gtop"
-version = "0.1.0"
-description = "A lightweight CLI tool to monitor GPU."
+version = "0.2.0"
+description = "A lightweight CLI tool to monitor GPU status."
 readme = "README.md"
 authors = [{ name = "Hossein Ghorbanfekr", email = "hgh.comphys@gmail.com" }]
 license = {text = "MIT"}
