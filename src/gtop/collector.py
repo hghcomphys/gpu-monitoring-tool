@@ -25,8 +25,8 @@ class CollectedGpuMetrics:
             f"Time={self.timestamp:0.2f}(s)"
             f", Utilization={self.utilization:0.2f}(%)"
             f", Memory={self.memory:0.2f}(%)"
-            f", PCI-TX={self.pci_tx:0.2f}(MB/s)"
             f", PCI-RX={self.pci_rx:0.2f}(MB/s)"
+            f", PCI-TX={self.pci_tx:0.2f}(MB/s)"
             # f", Power={self.power_usage:0.2f}(W)"
             ")"
         )

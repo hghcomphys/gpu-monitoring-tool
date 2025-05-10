@@ -1,12 +1,10 @@
 import argparse
 import time
-import plotext as plt
-from gtop.collector import collect
+from gtop.collector import CollectedGpuMetricsBuffer, collect
 from gtop.config import Config
 from gtop.device import free_device, get_device
-from gtop.visualizer import visualize
 from gtop.metrics import GpuMetrics
-from gtop.collector import CollectedGpuMetricsBuffer
+from gtop.visualizer import PlotextVisualizer, show_textmode
 
 
 def parse_arguments():
@@ -36,15 +34,18 @@ def parse_arguments():
 
 def main():
     cfg = Config.from_parser(args=parse_arguments())
-    handle = get_device(cfg)
-    metrics = GpuMetrics.for_device(handle)
+    metrics = GpuMetrics.for_device(handle=get_device(cfg))
     buffer = CollectedGpuMetricsBuffer(size=cfg.collector_buffer_size)
+    visualizer = PlotextVisualizer()
     start_time = time.time()
     try:
         while True:
             collected_metrics = collect(metrics, start_time, cfg)
             buffer.append(collected_metrics)
-            visualize(buffer, plt, cfg)
+            if cfg.text_mode:
+                show_textmode(buffer)
+            else:
+                visualizer.show(buffer, cfg)
             time.sleep(cfg.update_interval)
     except KeyboardInterrupt:
         pass
