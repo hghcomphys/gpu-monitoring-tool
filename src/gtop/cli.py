@@ -5,8 +5,8 @@ from gtop.collector import collect
 from gtop.config import Config
 from gtop.device import free_device, get_device
 from gtop.visualizer import visualize
-from gtop.metrics import Metrics
-from gtop.collector import CollectedMetricsBuffer
+from gtop.metrics import GpuMetrics
+from gtop.collector import CollectedGpuMetricsBuffer
 
 
 def parse_arguments():
@@ -28,7 +28,7 @@ def parse_arguments():
     parser.add_argument(
         "--text-mode",
         "-t",
-        action='store_true',
+        action="store_true",
         help="Enable text mode (default: False)",
     )
     return parser.parse_args()
@@ -37,12 +37,12 @@ def parse_arguments():
 def main():
     cfg = Config.from_parser(args=parse_arguments())
     handle = get_device(cfg)
-    metrics = Metrics.for_device(handle)
-    buffer = CollectedMetricsBuffer(size=cfg.collector_buffer_size)
+    metrics = GpuMetrics.for_device(handle)
+    buffer = CollectedGpuMetricsBuffer(size=cfg.collector_buffer_size)
     start_time = time.time()
     try:
         while True:
-            collected_metrics = collect(metrics, handle, start_time, cfg)
+            collected_metrics = collect(metrics, start_time, cfg)
             buffer.append(collected_metrics)
             visualize(buffer, plt, cfg)
             time.sleep(cfg.update_interval)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, Sequence,Optional
 import pynvml
 
 from gtop.device import DeviceHandle
@@ -8,9 +8,43 @@ from typing import Any, Tuple
 
 
 class MetricInterface(Protocol):
-    def measure() -> Any:
-        ...
+    def measure() -> Any: ...
 
+
+@dataclass
+class GpuComputeRunningProcesses(MetricInterface):
+    handle: DeviceHandle
+
+    def measure(self) -> Sequence:
+        return pynvml.nvmlDeviceGetComputeRunningProcesses(self.handle)
+
+
+@dataclass
+class GpuInfoMetric(MetricInterface):
+    handle: DeviceHandle
+
+    def measure(self) -> str:
+        return pynvml.nvmlDeviceGetName(self.handle)
+
+
+@dataclass
+class GpuTemperatureMetric(MetricInterface):
+    handle: DeviceHandle
+
+    def measure(self) -> float:
+        return pynvml.nvmlDeviceGetTemperature(self.handle, pynvml.NVML_TEMPERATURE_GPU)
+
+
+@dataclass
+class GpuPowerUsageMetric(MetricInterface):
+    handle: DeviceHandle
+
+    def measure(self) -> Optional[float]:
+        try:
+            power_mw = pynvml.nvmlDeviceGetPowerUsage(self.handle)
+            return power_mw * 0.001  # watts
+        except pynvml.NVMLError:
+            return None 
 
 @dataclass
 class PciThroughputMetric(MetricInterface):
@@ -35,7 +69,7 @@ class PciThroughputMetric(MetricInterface):
 
 
 @dataclass
-class GpuProcessMetric(MetricInterface):
+class GpuUtilizationMetric(MetricInterface):
     handle: DeviceHandle
 
     def measure(self) -> float:
@@ -55,15 +89,23 @@ class GpuMemoryMetric(MetricInterface):
 
 
 @dataclass
-class Metrics:
+class GpuMetrics:
     pci_throughput: PciThroughputMetric
-    gpu_processs: GpuProcessMetric
-    gpu_memory: GpuMemoryMetric
+    utilization: GpuProcessMetric
+    memory: GpuMemoryMetric
+    info: GpuInfoMetric
+    processes: GpuComputeRunningProcesses
+    power_usage: GpuPowerUsageMetric
+    temperature: GpuTemperatureMetric
 
     @classmethod
     def for_device(cls, handle: DeviceHandle):
         return cls(
             PciThroughputMetric(handle),
-            GpuProcessMetric(handle),
+            GpuUtilizationMetric(handle),
             GpuMemoryMetric(handle),
+            GpuInfoMetric(handle),
+            GpuComputeRunningProcesses(handle),
+            GpuPowerUsageMetric(handle),
+            GpuTemperatureMetric(handle),
         )

@@ -1,12 +1,13 @@
+from psutil import POWER_TIME_UNKNOWN
 from gtop.config import Config
-from gtop.collector import CollectedMetricsBuffer
+from gtop.collector import CollectedGpuMetricsBuffer
 from typing import Any
 
 PlotHandle = Any
 
 
 def visualize(
-    inputs: CollectedMetricsBuffer,
+    inputs: CollectedGpuMetricsBuffer,
     plt: PlotHandle,
     cfg: Config,
 ) -> None:
@@ -15,54 +16,82 @@ def visualize(
         return
     plt.clt()
     plt.cld()
-    plt.subplots(1, 2)
-    plt.theme(cfg.visualizer_plot_theme)
     plt.plotsize(cfg.visualizer_plot_size)
-    # --------------
-    plt.subplot(1, 2)
-    timestamps = [input.timestamp for input in inputs]
-    pci_tx_values = [input.pci_tx for input in inputs]
-    pci_rx_values = [input.pci_rx for input in inputs]
-    plt.plot(
-        timestamps,
-        pci_tx_values,
-        label="TX",
-        marker=cfg.visualizer_plot_marker,
-    )
-    plt.plot(
-        timestamps,
-        pci_rx_values,
-        label="RX",
-        marker=cfg.visualizer_plot_marker,
-    )
-    plt.title("GPU PCIe Throughput")
-    plt.xlabel("Time (s)")
-    plt.ylabel("Throughput (MB/s)")
-    plt.ylim(0, max(1, max(pci_tx_values + pci_rx_values) * 1.2))
-
-    # --------------
+    plt.theme(cfg.visualizer_plot_theme)
+    plt.subplots(2, 2)
+    # --------------------
     plt.subplot(1, 1)
-    process_values = [input.process for input in inputs]
-    memory_values = [input.memory for input in inputs]
-    plt.plot(
-        timestamps,
-        process_values,
-        label="Process",
-        marker=cfg.visualizer_plot_marker,
+    gpu_info = (
+        (
+            f"{inputs.last.name}"
+            f"\nTotal Memory: {inputs.last.memory_total:0.0f} (MB)"
+            f"\nTemperature: {inputs.last.temperature:0.1f} (°C)"
+        )
+        + (f"\nPower Usage: {inputs.last.power_usage:0.1f} (W)"
+        if inputs.last.power_usage is not None
+        else "")
     )
-    plt.plot(
-        timestamps,
-        memory_values,
-        label="Memory",
-        marker=cfg.visualizer_plot_marker,
+    plt.text(gpu_info, 0, 1)
+    plt.xticks([])
+    plt.yticks([])
+    # plt.xaxes(False, True)
+    plt.yaxes(False, False)
+    plt.ylim(0, 1)
+    plt.title("GPU Information")
+    # --------------------
+    plt.subplot(2, 1)
+    processes = (
+        inputs.last.processes
+        if inputs.last.processes
+        else "No Compute Running Processes"
     )
-    plt.title("GPU Utilization")
-    plt.xlabel("Time (s)")
-    plt.ylabel("Utilization (%)")
-    plt.ylim(0, 100)
-
+    plt.text(processes, 0, 1)
+    plt.xticks([])
+    plt.yticks([])
+    # plt.xaxes(False, True)
+    plt.yaxes(False, False)
+    plt.ylim(0, 1)
+    plt.title("GPU Processes")
+    # --------------------
+    plt.subplot(1, 2)
+    names = [
+        "Memory",
+        "Utilization",
+    ]
+    values = [
+        inputs.last.memory,
+        inputs.last.utilization,
+    ]
+    plt.bar(
+        names,
+        values,
+        orientation="h",
+        width=2 / 5,
+    )
+    plt.title("GPU Utilization (%)")
+    plt.xlim(0, 100)
+    # --------------------
+    plt.subplot(2, 2)
+    names = [
+        "PCI-TX",
+        "PCI-RX",
+    ]
+    values = [
+        inputs.last.pci_rx,
+        inputs.last.pci_tx,
+    ]
+    plt.bar(
+        names,
+        values,
+        orientation="h",
+        width=2 / 5,
+    )
+    plt.title("GPU PCIe Throughput (MB/s)")
+    plt.xlim(0, max(1, max(inputs.last.pci_tx, inputs.last.pci_rx) * 1.2))
+    # --------------------
+    plt.sleep(cfg.update_interval)
     plt.show()
 
 
-def printout_metrics(inputs: CollectedMetricsBuffer) -> None:
+def printout_metrics(inputs: CollectedGpuMetricsBuffer) -> None:
     print(inputs.last)
