@@ -74,7 +74,7 @@ def collect(
         ps = psutil.Process(pid)
         if index == 1:
             processes_text = "Index | PID | Username | Command\n"
-        processes_text += f"[{index}] {pid}, {ps.username()}, {' '.join(ps.cmdline())}\n"
+        processes_text += f"[{index}] {pid}, {ps.username()}, {ps.name()}\n"
 
     return CollectedGpuMetrics(
         timestamp=max(now, cfg.collector_min_time_interval),
