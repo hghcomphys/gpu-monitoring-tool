@@ -3,13 +3,15 @@
 <!-- [![PyPI](https://img.shields.io/pypi/v/gtop?label=pypi%20package)](https://pypi.org/project/gtop) -->
 <!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) -->
 
-A lightweight CLI tool to monitor GPU.
+A lightweight CLI tool to monitor GPU status.
 
+<!--
 ## Motivation
 Current GPU monitoring tools often fall short in two ways:
 
+* Inflexible metric selection: users should be able to customize which metrics they need to measure, rather than being limited to predefined sets.
 * No PCI throughput metrics: RX and TX metrics are important, as data transfer between CPU and GPU is frequently the computational bottleneck.
-* Inflexible metric selection: Users should be able to customize which metrics they need to measure, rather than being limited to predefined sets.
+-->
 
 <!--
 ## Features
@@ -36,7 +38,7 @@ To uninstall `gtop`, use the following command:
 pip uninstall gtop
 ```
 
-## Examples
+## Example
 A screenshot of `gtop` in action is shown below:
 
 <img src="docs/images/screenshot.png" alt="demo screemshot" width="700"/>
