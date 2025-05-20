@@ -13,7 +13,7 @@ class Config:
     collector_min_time_interval: float = 0.1
     visualizer_plot_size: Optional[tuple[int, int]] = None
     visualizer_plot_theme: Optional[str] = "pro"
-    visualizer_plot_marker: str = "dot"
+    visualizer_plot_marker: Optional[str] = None
     visualizer_plot_time_range: float = 60
 
     @classmethod

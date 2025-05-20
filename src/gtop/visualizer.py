@@ -24,7 +24,7 @@ class PlotextVisualizer:
         plt.theme(cfg.visualizer_plot_theme)
         plt.subplots(2, 2)
         plt.subplot(1, 1)
-        self._show_gpu_info(inputs.last, plt)
+        self._show_gpu_info(inputs.last, plt, cfg)
         plt.subplot(1, 2)
         self._plot_utilization(inputs, plt, cfg)
         # self._bar_plot_utilization(inputs.last, plt)
@@ -40,15 +40,17 @@ class PlotextVisualizer:
         cls,
         metrics: CollectedGpuMetrics,
         plt: PlotHandle,
+        cfg: Config,
     ) -> None:
         gpu_info = (
-            f"{metrics.name}"
+            f"{metrics.name} (Device[{cfg.device_gpu_index}])"
             f"\nTotal Memory: {metrics.memory_total:0.0f} (MB)"
-            f"\nTemperature: {metrics.temperature:0.1f} (°C)"
         ) + (
             f"\nPower Usage: {metrics.power_usage:0.1f} (W)"
             if metrics.power_usage is not None
             else ""
+        ) + (
+            f"\nTemperature: {metrics.temperature:0.1f} (°C)"
         )
         plt.text(gpu_info, 0, 1)
         plt.xticks([])
@@ -65,7 +67,7 @@ class PlotextVisualizer:
         plt: PlotHandle,
     ) -> None:
         processes = (
-            metrics.processes if metrics.processes else "No Compute Running Processes"
+            metrics.processes if metrics.processes else "[No Compute Running Processes]"
         )
         plt.text(processes, 0, 1)
         plt.xticks([])
