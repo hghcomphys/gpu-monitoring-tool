@@ -43,7 +43,7 @@ class PlotextVisualizer:
         cfg: Config,
     ) -> None:
         gpu_info = (
-            f"{metrics.name} (Device[{cfg.device_gpu_index}])"
+            f"{metrics.name} (Device {cfg.device_gpu_index})"
             f"\nTotal Memory: {metrics.memory_total:0.0f} (MB)"
         ) + (
             f"\nPower Usage: {metrics.power_usage:0.1f} (W)"

@@ -72,11 +72,12 @@ def collect(
     for index, p in enumerate(processes, start=1):
         pid = p.pid
         ps = psutil.Process(pid)
+        mem_used_per_process = p.usedGpuMemory/1024**2
         if index == 1:
-            processes_text = "Index PID | Username (Memory) | Command\n"
+            processes_text = "PID | Username (Memory) | Command\n"
         processes_text += ( 
-                f"[{index}] {pid}"
-                f", {ps.username()} ({p.usedGpuMemory//1024**2:.0f}MB)"
+                f"{pid}"
+                f", {ps.username()} ({mem_used_per_process/mem_total * 100:.0f}%)"
                 f", {ps.name()}\n"
         )
 
