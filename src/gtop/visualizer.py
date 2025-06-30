@@ -17,6 +17,8 @@ class PlotextVisualizer:
         inputs: CollectedGpuMetricsBuffer,
         cfg: Config,
     ) -> None:
+        if len(inputs.buffer) < 2:
+            return
         plt = self.plt
         plt.clt()
         plt.cld()
@@ -43,14 +45,16 @@ class PlotextVisualizer:
         cfg: Config,
     ) -> None:
         gpu_info = (
-            f"{metrics.name} (Device {cfg.device_gpu_index})"
-            f"\nTotal Memory: {metrics.memory_total:0.0f} (MB)"
-        ) + (
-            f"\nPower Usage: {metrics.power_usage:0.1f} (W)"
-            if metrics.power_usage is not None
-            else ""
-        ) + (
-            f"\nTemperature: {metrics.temperature:0.1f} (°C)"
+            (
+                f"{metrics.name} (Device {cfg.device_gpu_index})"
+                f"\nTotal Memory: {metrics.memory_total:0.0f} (MB)"
+            )
+            + (
+                f"\nPower Usage: {metrics.power_usage:0.1f} (W)"
+                if metrics.power_usage is not None
+                else ""
+            )
+            + (f"\nTemperature: {metrics.temperature:0.1f} (°C)")
         )
         plt.text(gpu_info, 0, 1)
         plt.xticks([])
@@ -130,7 +134,9 @@ class PlotextVisualizer:
         plt: PlotHandle,
         cfg: Config,
     ) -> None:
-        timestamps = [input.timestamp for input in inputs]
+        timestamps = cls.get_shifted_timestamps(
+            [input.timestamp for input in inputs], cfg
+        )
         pci_rx_values = [input.pci_rx for input in inputs]
         pci_tx_values = [input.pci_tx for input in inputs]
         plt.plot(
@@ -149,6 +155,7 @@ class PlotextVisualizer:
         plt.xlabel("Time (s)")
         plt.ylabel("Throughput (MB/s)")
         plt.ylim(0, max(1, max(pci_tx_values + pci_rx_values) * 1.2))
+        plt.xlim(-cfg.visualizer_plot_time_interval, 0)
 
     @classmethod
     def _plot_utilization(
@@ -157,7 +164,9 @@ class PlotextVisualizer:
         plt: PlotHandle,
         cfg: Config,
     ) -> None:
-        timestamps = [input.timestamp for input in inputs]
+        timestamps = cls.get_shifted_timestamps(
+            [input.timestamp for input in inputs], cfg
+        )
         utilization_values = [input.utilization for input in inputs]
         memory_values = [input.memory for input in inputs]
         plt.plot(
@@ -176,9 +185,24 @@ class PlotextVisualizer:
         plt.xlabel("Time (s)")
         plt.ylabel("Utilization (%)")
         plt.ylim(0, 100)
+        plt.xlim(-cfg.visualizer_plot_time_interval, 0)
+
+    @classmethod
+    def get_shifted_timestamps(
+        cls,
+        timestamps: list[float],
+        cfg: Config,
+    ) -> list[float]:
+        timestamps = [
+            time - timestamps[0] - cfg.visualizer_plot_time_interval
+            for time in timestamps
+        ]
+        if len(timestamps) < cfg.collector_buffer_size:
+            timestamps = [time - timestamps[-1] for time in timestamps]
+        return timestamps
 
 
-def show_textmode(
+def textmode_show(
     inputs: CollectedGpuMetricsBuffer,
 ) -> None:
     print(inputs.last)

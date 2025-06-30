@@ -74,7 +74,7 @@ def collect(
         ps = psutil.Process(pid)
         mem_used_per_process = p.usedGpuMemory/1024**2
         if index == 1:
-            processes_text = "PID | Username (Memory) | Command\n"
+            processes_text = "PID | Username (GPU Memory) | Command\n"
         processes_text += ( 
                 f"{pid}"
                 f", {ps.username()} ({mem_used_per_process/mem_total * 100:.0f}%)"

@@ -4,7 +4,7 @@ from gtop.collector import CollectedGpuMetricsBuffer, collect
 from gtop.config import Config
 from gtop.device import free_device, get_device
 from gtop.metrics import GpuMetrics
-from gtop.visualizer import PlotextVisualizer, show_textmode
+from gtop.visualizer import PlotextVisualizer, textmode_show
 
 
 def parse_arguments():
@@ -17,7 +17,7 @@ def parse_arguments():
         help="GPU index to monitor (default: 0)",
     )
     parser.add_argument(
-        "--update-interval",
+        "--update-time-interval",
         "-u",
         type=float,
         default=1.0,
@@ -46,7 +46,7 @@ def main():
                 show_textmode(buffer)
             else:
                 visualizer.show(buffer, cfg)
-            time.sleep(cfg.update_interval)
+            time.sleep(cfg.update_time_interval)
     except KeyboardInterrupt:
         pass
     finally:
