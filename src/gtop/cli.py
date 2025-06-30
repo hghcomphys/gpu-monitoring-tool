@@ -43,7 +43,7 @@ def main():
             collected_metrics = collect(metrics, start_time, cfg)
             buffer.append(collected_metrics)
             if cfg.text_mode:
-                show_textmode(buffer)
+                textmode_show(buffer)
             else:
                 visualizer.show(buffer, cfg)
             time.sleep(cfg.update_time_interval)
