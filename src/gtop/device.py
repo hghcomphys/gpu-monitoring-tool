@@ -10,7 +10,7 @@ def get_device(cfg: Config) -> DeviceHandle:
         handle = pynvml.nvmlDeviceGetHandleByIndex(cfg.device_gpu_index)
 
     except pynvml.NVMLError as error:
-        print(f"GPU Not Detected! ({error})")
+        print(f"GPU Not Detected! (Error: {error})")
         sys.exit(1)
     return handle
 

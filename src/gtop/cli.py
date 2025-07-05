@@ -11,7 +11,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="A basic CLI tool to Monitor GPU.")
     parser.add_argument(
         "--device-gpu-index",
-        "-g",
+        "-d",
         type=int,
         default=0,
         help="GPU index to monitor (default: 0)",
@@ -35,7 +35,7 @@ def parse_arguments():
 def main():
     cfg = Config.from_parser(args=parse_arguments())
     metrics = GpuMetrics.for_device(handle=get_device(cfg))
-    buffer = CollectedGpuMetricsBuffer(size=cfg.collector_buffer_size)
+    buffer = CollectedGpuMetricsBuffer(max_size=cfg.collector_buffer_size)
     visualizer = PlotextVisualizer()
     start_time = time.time()
     try:
@@ -46,7 +46,9 @@ def main():
                 textmode_show(buffer)
             else:
                 visualizer.show(buffer, cfg)
-            time.sleep(cfg.update_time_interval)
+
+            if len(buffer) > 1:
+                time.sleep(cfg.update_time_interval)
     except KeyboardInterrupt:
         pass
     finally:

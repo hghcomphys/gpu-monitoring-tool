@@ -1,7 +1,7 @@
 import time
 import psutil
 from dataclasses import dataclass, field
-from typing import List
+from typing import Iterator, List
 from gtop.config import Config
 from gtop.metrics import GpuMetrics
 
@@ -34,17 +34,20 @@ class CollectedGpuMetrics:
 
 @dataclass
 class CollectedGpuMetricsBuffer:
-    size: int
+    max_size: int
     buffer: List[CollectedGpuMetrics] = field(default_factory=list)
 
     def append(self, item: CollectedGpuMetrics) -> None:
         self.buffer.append(item)
-        if len(self.buffer) > self.size:
-            self.buffer = self.buffer[-self.size :]
+        if len(self.buffer) > self.max_size:
+            self.buffer = self.buffer[-self.max_size :]
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[CollectedGpuMetrics]:
         for item in self.buffer:
             yield item
+
+    def __len__(self) -> int:
+        return len(self.buffer)
 
     @property
     def last(self) -> CollectedGpuMetrics:
